@@ -5,6 +5,13 @@ import { RainbowKitProvider, getDefaultWallets } from '@rainbow-me/rainbowkit';
 import { chain, configureChains, createClient, WagmiConfig } from 'wagmi';
 import { alchemyProvider } from 'wagmi/providers/alchemy';
 import { publicProvider } from 'wagmi/providers/public';
+import { useReducer } from "react";
+import {
+  DispatchPlayerContext,
+  PlayerContext,
+  playerInitialState,
+  playerReducer,
+} from "decent-audio-player";
 
 const { chains, provider, webSocketProvider } = configureChains(
   [
@@ -39,10 +46,16 @@ const wagmiClient = createClient({
 });
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const [state, dispatch] = useReducer(playerReducer, playerInitialState);
+
   return (
     <WagmiConfig client={wagmiClient}>
       <RainbowKitProvider chains={chains}>
-        <Component {...pageProps} />
+      <PlayerContext.Provider value={state}>
+      <DispatchPlayerContext.Provider value={dispatch}>
+      <Component {...pageProps} />
+      </DispatchPlayerContext.Provider>
+      </PlayerContext.Provider>
       </RainbowKitProvider>
     </WagmiConfig>
   );

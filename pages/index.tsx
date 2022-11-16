@@ -1,4 +1,5 @@
 import { ConnectButton } from '@rainbow-me/rainbowkit';
+import { AudioPlayer } from 'decent-audio-player';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import styles from '../styles/Home.module.css';
@@ -35,6 +36,12 @@ const Home: NextPage = () => {
             
             <a href="#" className="py-10 px-3 border rounded-lg border-black">
               <div className="text-2xl">Solana</div>
+              <AudioPlayer
+                  size={56}
+                  audioSrc="https://nftstorage.link/ipfs/QmWNaSdhXq2WdusiBcVC2Ju5A1JJySRDVNrQMEBGcaazvC"
+                  callbackAfterPlay={console.log}
+                  active
+                />
               <p>Starting with the <code className={styles.code}>components/SolanaCard</code> to get started</p>
             </a>
 
